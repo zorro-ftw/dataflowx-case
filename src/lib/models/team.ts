@@ -11,6 +11,7 @@ export type TeamMember = {
   id: string;
   name: string;
   description?: string;
+  hidden?: boolean;
 };
 
-export type TeamMemberOnCreate = Omit<TeamMember, "id">;
+export type TeamMemberOnCreate = Omit<TeamMember, "id"> & { teamId: string };

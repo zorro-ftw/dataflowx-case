@@ -19,11 +19,9 @@ export const TeamForm = () => {
 
   return (
     <Form {...createTeamForm}>
-      {
-        <form onSubmit={onFormSubmit} className="space-y-4">
-          <TeamFormBody />
-        </form>
-      }
+      <form onSubmit={onFormSubmit} className="space-y-4">
+        <TeamFormBody />
+      </form>
     </Form>
   );
 };
