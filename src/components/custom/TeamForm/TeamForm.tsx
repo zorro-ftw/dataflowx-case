@@ -21,7 +21,7 @@ export const TeamForm = () => {
   const onFormSubmit = createTeamForm.handleSubmit(async (data) => {
     try {
       // This is here to simulate an API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, Math.random() * 1200));
       createTeam(data);
       setIsCreateTeamDialogOpen(false);
       toast({
@@ -30,6 +30,11 @@ export const TeamForm = () => {
       });
     } catch (error) {
       console.error(error);
+      toast({
+        title: "Something went wrong",
+        description: error?.toString(),
+        variant: "destructive",
+      });
     } finally {
       createTeamForm.reset();
     }

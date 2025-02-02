@@ -23,7 +23,9 @@ export const MemberForm = () => {
     async (data: TeamMemberOnCreate) => {
       try {
         // This is here to simulate an API call
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) =>
+          setTimeout(resolve, Math.random() * 1200)
+        );
         addMemberToTeam(data);
         setIsAddMemberDialogOpen(false);
         toast({
@@ -32,6 +34,11 @@ export const MemberForm = () => {
         });
       } catch (error) {
         console.error(error);
+        toast({
+          title: "Something went wrong",
+          description: error?.toString(),
+          variant: "destructive",
+        });
       } finally {
         addMemberForm.reset();
       }
