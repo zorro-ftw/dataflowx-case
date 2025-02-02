@@ -1,11 +1,13 @@
+import { useContext } from "react";
+import { DialogContext } from "./lib/contexts/DialogContext";
 import { Button } from "./components/ui/button";
 
 function App() {
+  const { setIsCreateTeamDialogOpen } = useContext(DialogContext);
   return (
-    <div className="text-red-500">
-      asd
-      <Button variant="link" onClick={() => console.log("clicked")}>
-        Click me
+    <div className="w-full h-full flex items-center justify-center">
+      <Button onClick={() => setIsCreateTeamDialogOpen(true)}>
+        Create Team
       </Button>
     </div>
   );

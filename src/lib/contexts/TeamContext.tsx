@@ -2,6 +2,7 @@ import {
   createContext,
   ReactNode,
   useCallback,
+  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -15,7 +16,9 @@ interface TeamContextValue {
   removeMemberFromTeam: (teamId: string, memberId: string) => void;
 }
 
-const TeamContext = createContext<TeamContextValue>({} as TeamContextValue);
+export const TeamContext = createContext<TeamContextValue>(
+  {} as TeamContextValue
+);
 
 export const TeamProvider = ({ children }: { children: ReactNode }) => {
   const [teams, setTeams] = useState<Team[]>([]);
