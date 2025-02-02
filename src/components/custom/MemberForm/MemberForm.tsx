@@ -7,17 +7,34 @@ import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { MemberFormBody } from "./MemberFormBody";
+import { DialogContext } from "@/lib/contexts/DialogContext";
+import { useToast } from "@/hooks/use-toast";
 
 export const MemberForm = () => {
   const { addMemberToTeam } = useContext(TeamContext);
+  const { setIsAddMemberDialogOpen } = useContext(DialogContext);
+  const { toast } = useToast();
 
   const addMemberForm = useForm<z.infer<typeof addMemberFormSchema>>({
     resolver: zodResolver(addMemberFormSchema),
   });
 
   const onFormSubmit = addMemberForm.handleSubmit(
-    (data: TeamMemberOnCreate) => {
-      addMemberToTeam(data);
+    async (data: TeamMemberOnCreate) => {
+      try {
+        // This is here to simulate an API call
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        addMemberToTeam(data);
+        setIsAddMemberDialogOpen(false);
+        toast({
+          title: "Member added",
+          description: "The member has been added successfully",
+        });
+      } catch (error) {
+        console.error(error);
+      } finally {
+        addMemberForm.reset();
+      }
     }
   );
 

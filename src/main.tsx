@@ -3,11 +3,12 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Diagram from "./pages/Diagram.tsx";
-import Charts from "./pages/Charts.tsx";
-import { MainProvider } from "./lib/contexts/index.tsx";
-import { TeamFormDialog } from "./components/custom/TeamForm/TeamFormDialog.tsx";
-import { MemberFormDialog } from "./components/custom/MemberForm/MemberFormDialog.tsx";
+import Diagram from "@/pages/Diagram.tsx";
+import Charts from "@/pages/Charts.tsx";
+import { MainProvider } from "@/lib/contexts/index.tsx";
+import { TeamFormDialog } from "@/components/custom/TeamForm/TeamFormDialog.tsx";
+import { MemberFormDialog } from "@/components/custom/MemberForm/MemberFormDialog.tsx";
+import { Toaster } from "@/components/ui/toaster.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -21,6 +22,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/" element={<App />} />
         </Routes>
       </BrowserRouter>
+      <Toaster />
     </MainProvider>
   </StrictMode>
 );

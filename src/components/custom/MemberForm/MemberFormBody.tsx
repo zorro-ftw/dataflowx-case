@@ -16,11 +16,15 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { TeamContext } from "@/lib/contexts/TeamContext";
+import { Loader2 } from "lucide-react";
 import { useContext, useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 
 export const MemberFormBody = () => {
-  const { control } = useFormContext();
+  const {
+    control,
+    formState: { isSubmitting },
+  } = useFormContext();
   const { teams } = useContext(TeamContext);
 
   const teamOptions = useMemo(() => {
@@ -82,7 +86,10 @@ export const MemberFormBody = () => {
           </FormItem>
         )}
       />
-      <Button type="submit">Add Member</Button>
+      <Button type="submit" disabled={isSubmitting}>
+        {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+        {isSubmitting ? "Adding..." : "Add Member"}
+      </Button>
     </>
   );
 };
