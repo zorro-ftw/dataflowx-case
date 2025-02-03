@@ -6,7 +6,7 @@ export type Team = {
   membersHidden: boolean;
 };
 
-export type TeamOnCreate = Omit<Team, "id" | "members">;
+export type TeamOnCreate = Omit<Team, "id" | "members" | "membersHidden">;
 
 export type TeamMember = {
   id: string;
