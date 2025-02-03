@@ -9,12 +9,19 @@ import {
   type Edge,
   type Node,
 } from "@xyflow/react";
+import { CustomNode } from "./CustomNode";
+import { NodeData, NodeType } from "@/lib/models/flow";
+
+const nodeTypes = {
+  [NodeType.TEAM]: CustomNode,
+  [NodeType.MEMBER]: CustomNode,
+};
 
 export const Flow = () => {
   const { teams } = useContext(TeamContext);
 
   const { nodes, edges } = useMemo(() => {
-    const nodes: Node[] = [];
+    const nodes: Node<NodeData>[] = [];
     const edges: Edge[] = [];
 
     teams.forEach((team) => {
@@ -22,10 +29,11 @@ export const Flow = () => {
         id: team.id,
         data: {
           label: team.name,
-          type: "team",
+          description: team.description,
         },
+        type: NodeType.TEAM,
         position: { x: 0, y: 0 },
-        className: "bg-primary text-primary-foreground rounded-md px-4 py-2",
+        className: "bg-primary text-primary-foreground rounded-md",
       });
 
       team.members.forEach((member) => {
@@ -36,11 +44,11 @@ export const Flow = () => {
           id: memberId,
           data: {
             label: member.name,
-            type: "member",
+            description: member.description,
           },
+          type: NodeType.MEMBER,
           position: { x: 0, y: 0 },
-          className:
-            "bg-secondary text-secondary-foreground rounded-md px-4 py-2",
+          className: "bg-secondary text-secondary-foreground rounded-md",
         });
 
         edges.push({
@@ -61,6 +69,7 @@ export const Flow = () => {
     <ReactFlow
       nodes={nodes}
       edges={edges}
+      nodeTypes={nodeTypes}
       onNodesChange={() => instance.fitView()}
       fitView
       className="border rounded-md"
