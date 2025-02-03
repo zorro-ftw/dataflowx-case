@@ -16,7 +16,7 @@ export const Navbar = () => {
   ));
 
   return (
-    <header className="w-fit lg:w-full h-fit lg:h-16 bg-white lg:shadow-md pl-3 pt-3 lg:px-4">
+    <header className="w-fit lg:w-full h-fit bg-white lg:shadow-md pl-3 py-3 lg:px-4">
       <Sheet>
         <SheetTrigger asChild>
           <Button
