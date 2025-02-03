@@ -5,6 +5,7 @@ import {
   Background,
   Controls,
   ReactFlow,
+  useReactFlow,
   type Edge,
   type Node,
 } from "@xyflow/react";
@@ -54,16 +55,15 @@ export const Flow = () => {
     return getLayoutedElements(nodes, edges);
   }, [teams]);
 
+  const instance = useReactFlow();
+
   return (
     <ReactFlow
       nodes={nodes}
       edges={edges}
+      onNodesChange={() => instance.fitView()}
       fitView
       className="border rounded-md"
-      panOnDrag
-      defaultEdgeOptions={{
-        type: "smoothstep",
-      }}
     >
       <Controls position="bottom-left" />
       <Background />

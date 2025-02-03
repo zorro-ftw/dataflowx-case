@@ -1,22 +1,15 @@
-import { useContext } from "react";
-import { DialogContext } from "./lib/contexts/DialogContext";
-import { Button } from "./components/ui/button";
-import { Navbar } from "./components/custom/Navbar/Navbar";
+import { Navbar } from "@/components/custom/Navbar/Navbar";
+import { FormButtons } from "@/components/custom/FormButtons/FormButtons";
 
 function App() {
-  const { setIsCreateTeamDialogOpen, setIsAddMemberDialogOpen } =
-    useContext(DialogContext);
   return (
-    <div className="w-full h-full max-h-screen">
+    <div className="w-full h-full max-h-screen space-y-4">
       <Navbar />
-      <div className="w-full h-max flex items-center justify-center pt-20">
-        <Button onClick={() => setIsCreateTeamDialogOpen(true)}>
-          Create Team
-        </Button>
-        <Button onClick={() => setIsAddMemberDialogOpen(true)} className="ml-2">
-          Add Member
-        </Button>
-      </div>
+      <h1 className="text-3xl font-bold text-center">Hi there 👋🏼</h1>
+      <p className="text-center text-xl text-muted-foreground">
+        Start by creating your team and then you can add members to any team
+      </p>
+      <FormButtons />
     </div>
   );
 }

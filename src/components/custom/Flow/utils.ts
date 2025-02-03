@@ -5,7 +5,7 @@ const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
 
 const nodeWidth = 200;
-const nodeHeight = 60;
+const nodeHeight = 120;
 
 export const getLayoutedElements = (
   nodes: Node[],
