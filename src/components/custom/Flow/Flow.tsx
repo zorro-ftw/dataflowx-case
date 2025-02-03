@@ -36,28 +36,28 @@ export const Flow = () => {
         className: "bg-primary text-primary-foreground rounded-md",
       });
 
-      team.members.forEach((member) => {
-        if (member.hidden) return;
+      if (!team.membersHidden) {
+        team.members.forEach((member) => {
+          const memberId = `${team.id}:${member.id}`;
+          nodes.push({
+            id: memberId,
+            data: {
+              label: member.name,
+              description: member.description,
+            },
+            type: NodeType.MEMBER,
+            position: { x: 0, y: 0 },
+            className: "bg-secondary text-secondary-foreground rounded-md",
+          });
 
-        const memberId = `${team.id}-${member.id}`;
-        nodes.push({
-          id: memberId,
-          data: {
-            label: member.name,
-            description: member.description,
-          },
-          type: NodeType.MEMBER,
-          position: { x: 0, y: 0 },
-          className: "bg-secondary text-secondary-foreground rounded-md",
+          edges.push({
+            id: `${team.id}-${memberId}`,
+            source: team.id,
+            target: memberId,
+            className: "text-red-500",
+          });
         });
-
-        edges.push({
-          id: `${team.id}-${memberId}`,
-          source: team.id,
-          target: memberId,
-          className: "text-red-500",
-        });
-      });
+      }
     });
 
     return getLayoutedElements(nodes, edges);
@@ -71,6 +71,7 @@ export const Flow = () => {
       edges={edges}
       nodeTypes={nodeTypes}
       onNodesChange={() => instance.fitView()}
+      panOnDrag
       fitView
       className="border rounded-md"
     >

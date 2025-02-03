@@ -13,11 +13,8 @@ interface TeamContextValue {
   teams: Team[];
   addMemberToTeam: (memberPayload: TeamMemberOnCreate) => void;
   removeMemberFromTeam: (teamId: string, memberId: string) => void;
-  updateMemberDisplay: (
-    teamId: string,
-    memberId: string,
-    hidden: boolean
-  ) => void;
+  toggleTeamMemberDisplay: (teamId: string) => void;
+  getTeam: (teamId: string) => Team | undefined;
 }
 
 export const TeamContext = createContext<TeamContextValue>(
@@ -29,7 +26,10 @@ export const TeamProvider = ({ children }: { children: ReactNode }) => {
 
   const createTeam = useCallback(
     (team: TeamOnCreate) => {
-      setTeams([...teams, { ...team, id: uuidv4(), members: [] }]);
+      setTeams([
+        ...teams,
+        { ...team, id: uuidv4(), members: [], membersHidden: false },
+      ]);
     },
     [teams]
   );
@@ -69,15 +69,19 @@ export const TeamProvider = ({ children }: { children: ReactNode }) => {
     [teams]
   );
 
-  const updateMemberDisplay = useCallback(
-    (teamId: string, memberId: string, hide: boolean) => {
+  const getTeam = useCallback(
+    (teamId: string) => {
+      return teams.find((team) => team.id === teamId);
+    },
+    [teams]
+  );
+
+  const toggleTeamMemberDisplay = useCallback(
+    (teamId: string) => {
       const index = teams.findIndex((t) => t.id === teamId);
       if (index === -1) return;
       const newTeams = [...teams];
-      newTeams[index].members = newTeams[index].members.map((member) => {
-        if (member.id === memberId) return { ...member, hidden: hide };
-        return member;
-      });
+      newTeams[index].membersHidden = !newTeams[index].membersHidden;
       setTeams(newTeams);
     },
     [teams]
@@ -90,7 +94,8 @@ export const TeamProvider = ({ children }: { children: ReactNode }) => {
       editTeam,
       addMemberToTeam,
       removeMemberFromTeam,
-      updateMemberDisplay,
+      toggleTeamMemberDisplay,
+      getTeam,
     };
   }, [
     addMemberToTeam,
@@ -98,7 +103,8 @@ export const TeamProvider = ({ children }: { children: ReactNode }) => {
     editTeam,
     removeMemberFromTeam,
     teams,
-    updateMemberDisplay,
+    toggleTeamMemberDisplay,
+    getTeam,
   ]);
   return (
     <TeamContext.Provider value={contextValue}>{children}</TeamContext.Provider>
